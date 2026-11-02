@@ -16,7 +16,7 @@ public class Interactable : MonoBehaviour
         
     }
 
-    protected void Interact()
+    public void Interact()
     {   
         controlPanel.AddInteraction();
         SetActiveInteractable(false);

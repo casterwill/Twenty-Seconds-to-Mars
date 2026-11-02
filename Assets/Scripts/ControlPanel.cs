@@ -1,14 +1,19 @@
 using System.Collections;
 using UnityEngine;
+using TMPro;
 
 public class ControlPanel : MonoBehaviour
 {
+    [Header("Interactable")]
     [SerializeField] private Color readyColor;
-
     [SerializeField] private Interactable[] interactables;
-
     [SerializeField] private int interactionTarget;
+
+    [Header("Countdown")]
+    [SerializeField] private TextMeshProUGUI countdownText;
     private int interactionProgress = 0;
+    private int countdownSeconds = 20;
+    private int currentTime = 0;
 
     public static ControlPanel Instance;
     private void Awake()
@@ -21,6 +26,19 @@ public class ControlPanel : MonoBehaviour
     void Start()
     {
         ReadyRandomInteractable();
+        StartCoroutine(StartCountdown());
+    }
+
+    private IEnumerator StartCountdown()
+    {
+        currentTime = countdownSeconds;
+        countdownText.text = currentTime.ToString();
+        while (currentTime > 0)
+        {
+            yield return new WaitForSeconds(1f);
+            currentTime--;
+            countdownText.text = currentTime.ToString();
+        }
     }
 
     private void ReadyRandomInteractable()
